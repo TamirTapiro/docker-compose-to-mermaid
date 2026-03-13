@@ -4,6 +4,8 @@ import type { NormalizedCompose } from './types/compose.js';
 
 // Re-export all public types — consumers import types from '@dc2mermaid/core'
 export * from './types/index.js';
+export * from './errors/index.js';
+export * from './analyzer/index.js';
 
 // ─── Step-by-step pipeline API ──────────────────────────────────────────────
 
@@ -60,20 +62,6 @@ export async function generate(options: GenerateOptions): Promise<string> {
   return render(graph, options.render);
 }
 
-// ─── Default render options ──────────────────────────────────────────────────
+// ─── Config loading & merging ────────────────────────────────────────────────
 
-export const DEFAULT_RENDER_OPTIONS: RenderOptions = {
-  type: 'flowchart',
-  direction: 'LR',
-  includeVolumes: true,
-  includePorts: true,
-  includeNetworkBoundaries: true,
-  theme: {
-    database: '#336791',
-    cache: '#DC382D',
-    queue: '#FF6600',
-    proxy: '#009639',
-    storage: '#569A31',
-    service: '#0078D4',
-  },
-};
+export * from './config/index.js';
