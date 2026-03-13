@@ -1,0 +1,26 @@
+{
+  "name": "docker-compose-to-mermaid-monorepo",
+  "private": true,
+  "scripts": {
+    "build": "pnpm -r run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint packages/*/src --ext .ts",
+    "typecheck": "pnpm -r run typecheck",
+    "clean": "pnpm -r run clean"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "latest",
+    "@commitlint/config-conventional": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "@vitest/coverage-v8": "^1.6",
+    "eslint": "^8",
+    "husky": "^9",
+    "lint-staged": "^15",
+    "prettier": "^3",
+    "tsup": "^8",
+    "typescript": "^5.4",
+    "vitest": "^1.6"
+  }
+}

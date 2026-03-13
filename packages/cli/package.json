@@ -1,0 +1,23 @@
+{
+  "name": "docker-compose-to-mermaid",
+  "version": "0.0.1",
+  "description": "Convert Docker Compose files into Mermaid architecture diagrams",
+  "type": "module",
+  "bin": {
+    "dc2mermaid": "./dist/index.js",
+    "docker-compose-to-mermaid": "./dist/index.js"
+  },
+  "files": ["dist/", "README.md", "LICENSE"],
+  "engines": { "node": ">=18.0.0" },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist/"
+  },
+  "dependencies": {
+    "@dc2mermaid/core": "workspace:*",
+    "chalk": "^5",
+    "clipboardy": "^4",
+    "commander": "^12"
+  }
+}

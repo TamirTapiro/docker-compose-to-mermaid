@@ -1,0 +1,13 @@
+{
+  "name": "dc2mermaid-vscode",
+  "version": "0.0.1",
+  "private": true,
+  "engines": { "vscode": "^1.85.0" },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist/"
+  },
+  "dependencies": {
+    "@dc2mermaid/core": "workspace:*"
+  }
+}
