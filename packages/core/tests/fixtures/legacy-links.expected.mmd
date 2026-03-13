@@ -1,0 +1,8 @@
+flowchart LR
+  subgraph default [default]
+    web[web]
+    db[(db)]
+    cache([cache])
+  end
+  web --> db
+  web --> cache

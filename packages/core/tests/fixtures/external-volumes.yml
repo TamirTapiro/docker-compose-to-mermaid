@@ -1,0 +1,15 @@
+services:
+  app:
+    image: myapp:latest
+    volumes:
+      - shared_data:/data
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    external: true
+
+volumes:
+  shared_data:
+    external: true

@@ -1,0 +1,22 @@
+services:
+  app:
+    build: ./app
+    environment:
+      DATABASE_URL: postgres://db:5432/myapp
+      REDIS_URL: redis://cache:6379
+      KAFKA_BROKERS: kafka:9092
+      MONGO_URI: mongodb://mongo:27017/mydb
+
+  db:
+    image: postgres:15
+
+  cache:
+    image: redis:7
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - '9092:9092'
+
+  mongo:
+    image: mongo:7

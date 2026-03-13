@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  api:
+    build: ./api
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+      - redis
+    environment:
+      DATABASE_URL: postgres://db:5432/app
+    networks:
+      - backend
+
+  worker:
+    build: ./worker
+    depends_on:
+      - redis
+      - db
+    networks:
+      - backend
+
+  redis:
+    image: redis:7
+    ports:
+      - '6379:6379'
+    networks:
+      - backend
+
+  db:
+    image: postgres:15
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+networks:
+  backend:
+
+volumes:
+  db_data:

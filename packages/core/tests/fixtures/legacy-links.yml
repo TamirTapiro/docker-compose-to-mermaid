@@ -1,0 +1,12 @@
+services:
+  web:
+    build: ./web
+    links:
+      - db
+      - cache:redis
+
+  db:
+    image: mysql:8
+
+  cache:
+    image: redis:7

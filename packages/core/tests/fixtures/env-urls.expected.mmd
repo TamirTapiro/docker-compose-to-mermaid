@@ -1,0 +1,12 @@
+flowchart LR
+  subgraph default [default]
+    app[app]
+    db[(db)]
+    cache([cache])
+    kafka[kafka]
+    mongo[(mongo)]
+  end
+  app -.->|postgres:5432| db
+  app -.->|redis:6379| cache
+  app -.->|kafka:9092| kafka
+  app -.->|mongodb:27017| mongo

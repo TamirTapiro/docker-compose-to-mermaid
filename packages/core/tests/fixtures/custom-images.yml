@@ -1,0 +1,12 @@
+services:
+  backend:
+    image: mycompany/backend:2.0
+    ports:
+      - '8080:8080'
+    depends_on:
+      - datastore
+
+  datastore:
+    image: internal-registry.company.com/custom-db:latest
+    ports:
+      - '5432:5432'

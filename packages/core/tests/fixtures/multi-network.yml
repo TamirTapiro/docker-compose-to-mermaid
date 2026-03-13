@@ -1,0 +1,24 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - '80:80'
+    networks:
+      - public
+      - internal
+
+  api:
+    build: ./api
+    depends_on:
+      - db
+    networks:
+      - internal
+
+  db:
+    image: postgres:15
+    networks:
+      - internal
+
+networks:
+  public:
+  internal:

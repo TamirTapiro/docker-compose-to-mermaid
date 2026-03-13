@@ -1,0 +1,10 @@
+services:
+  api:
+    environment:
+      LOG_LEVEL: debug
+      DEBUG: 'true'
+    ports:
+      - '9229:9229'
+
+  db:
+    image: postgres:15
