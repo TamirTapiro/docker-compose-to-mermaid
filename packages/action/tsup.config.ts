@@ -6,8 +6,6 @@ export default defineConfig({
   dts: false,
   clean: true,
   sourcemap: false,
-  treeshake: true,
-  external: ['@dc2mermaid/core', 'commander', 'chalk', 'clipboardy'],
+  external: ['@dc2mermaid/core'],
   outDir: 'dist',
-  // Note: shebang is added manually — don't use banner here as it breaks ESM
 });
