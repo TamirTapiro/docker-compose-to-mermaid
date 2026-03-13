@@ -1,2 +1,2 @@
 // Core library entry point — to be implemented in subsequent issues
-export {};
+export * from './types/index.js';
