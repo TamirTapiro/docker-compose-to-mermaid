@@ -89,7 +89,15 @@ jobs:
       # Build and publish the VSCode extension.
       # Requires a VSCE_PAT secret: generate at https://dev.azure.com → User Settings
       # → Personal access tokens → New Token → Marketplace (Manage) scope.
-      - run: pnpm --filter dc2mermaid-vscode build
-      - run: pnpm exec vsce publish --packagePath packages/vscode --no-dependencies
+      # Skipped silently when VSCE_PAT is not configured.
+      - if: ${{ secrets.VSCE_PAT != '' }}
+        run: pnpm --filter dc2mermaid-vscode build
+      - if: ${{ secrets.VSCE_PAT != '' }}
+        # vsce publish requires a .vsix file path (--packagePath) or runs from the
+        # extension directory. We package first, then publish the .vsix artifact.
+        run: |
+          cd packages/vscode
+          pnpm exec vsce package --no-dependencies
+          pnpm exec vsce publish --packagePath dc2mermaid-vscode-*.vsix
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
