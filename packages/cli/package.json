@@ -24,11 +24,11 @@
   "dependencies": {
     "@dc2mermaid/core": "workspace:*",
     "chalk": "^5",
-    "clipboardy": "^4",
-    "commander": "^12"
+    "clipboardy": "^5",
+    "commander": "^14"
   },
   "devDependencies": {
-    "@types/node": "^22",
-    "vitest": "^1.6"
+    "@types/node": "^25",
+    "vitest": "^4.1"
   }
 }
