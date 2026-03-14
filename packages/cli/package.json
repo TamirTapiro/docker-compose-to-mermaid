@@ -1,6 +1,6 @@
 {
   "name": "docker-compose-to-mermaid",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Convert Docker Compose files into Mermaid architecture diagrams",
   "type": "module",
   "bin": {
