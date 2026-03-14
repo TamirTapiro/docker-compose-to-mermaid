@@ -3,6 +3,12 @@ name: Release
 on:
   push:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      publish_only:
+        description: 'Skip release-please and run publish directly (use after a failed publish)'
+        type: boolean
+        default: false
 
 # Write access is needed for release-please to create/update release PRs and
 # tags. Pull-requests write is needed to open the release PR itself.
@@ -20,9 +26,9 @@ concurrency:
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    if: ${{ !inputs.publish_only }}
     outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
+      releases_created: ${{ steps.release.outputs.releases_created }}
     steps:
       - uses: googleapis/release-please-action@16a9c90856f42705d54a6fda1823352bdc62cf38 # v4.4.0
         id: release
@@ -32,10 +38,12 @@ jobs:
           manifest-file: .release-please-manifest.json
 
   publish:
-    needs: release-please
-    # Only runs when release-please has actually merged a release PR and created
-    # a GitHub release. On every other push to main this job is skipped.
-    if: ${{ needs.release-please.outputs.release_created }}
+    needs: [release-please]
+    if: |
+      always() && (
+        needs.release-please.outputs.releases_created == 'true' ||
+        inputs.publish_only == true
+      )
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
