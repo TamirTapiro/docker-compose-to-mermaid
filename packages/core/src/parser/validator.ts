@@ -23,7 +23,7 @@ export function validateComposeDocument(
   const parseResult = composeSchema.safeParse(raw);
 
   if (!parseResult.success) {
-    const firstError = parseResult.error.errors[0];
+    const firstError = parseResult.error.issues[0];
     const diagnostic: Diagnostic = {
       code: 'E003',
       message: `Schema validation failed: ${firstError?.message ?? 'unknown error'}`,
