@@ -57,19 +57,20 @@ jobs:
       - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: '20'
-          # Configures the npm registry and writes NODE_AUTH_TOKEN into .npmrc.
-          registry-url: 'https://registry.npmjs.org'
+          # No registry-url here — setup-node would set NPM_CONFIG_USERCONFIG to
+          # a temp file containing the literal string "${NODE_AUTH_TOKEN}" which
+          # pnpm does not expand, causing 401/404. We write the token ourselves.
           cache: 'pnpm'
 
-      - run: pnpm install --frozen-lockfile
-
-      # Write auth token directly into .npmrc so both npm and pnpm pick it up.
-      # actions/setup-node writes to a temp .npmrc via NPM_CONFIG_USERCONFIG but
-      # pnpm publish doesn't always honour that env var.
+      # Write the real token value (not a variable reference) directly to
+      # ~/.npmrc. Because NPM_CONFIG_USERCONFIG is not set, pnpm finds this file
+      # via the standard npm config resolution order.
       - name: Configure npm auth
-        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
+        run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - run: pnpm install --frozen-lockfile
 
       # Build in dependency order: core must be built before cli, because cli
       # imports from dc2mermaid-core at its workspace path.
