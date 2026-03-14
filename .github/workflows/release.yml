@@ -72,3 +72,11 @@ jobs:
       - run: pnpm --filter docker-compose-to-mermaid publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Build and publish the VSCode extension.
+      # Requires a VSCE_PAT secret: generate at https://dev.azure.com → User Settings
+      # → Personal access tokens → New Token → Marketplace (Manage) scope.
+      - run: pnpm --filter dc2mermaid-vscode build
+      - run: pnpm exec vsce publish --packagePath packages/vscode --no-dependencies
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}

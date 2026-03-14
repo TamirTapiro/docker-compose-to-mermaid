@@ -3,8 +3,25 @@
   "displayName": "Docker Compose to Mermaid",
   "description": "Live Mermaid architecture diagram preview for docker-compose files",
   "version": "0.0.1",
-  "private": true,
   "publisher": "TamirTapiro",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TamirTapiro/docker-compose-to-mermaid.git",
+    "directory": "packages/vscode"
+  },
+  "keywords": [
+    "docker-compose",
+    "mermaid",
+    "diagram",
+    "architecture",
+    "visualization"
+  ],
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#1A1A2E",
+    "theme": "dark"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
