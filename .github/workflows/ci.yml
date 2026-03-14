@@ -45,7 +45,7 @@ jobs:
 
   typecheck:
     name: Typecheck
-    needs: setup
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -57,6 +57,8 @@ jobs:
           node-version: 20
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # Build first so @dc2mermaid/core dist types exist for CLI typecheck
+      - run: pnpm build
       - run: pnpm typecheck
 
   build:
@@ -124,14 +126,16 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
-      - name: Pack CLI package
-        working-directory: packages/cli
+      - name: Pack packages
         run: |
           # pnpm pack resolves workspace:* to actual version numbers in the tarball
-          TARBALL=$(pnpm pack --pack-destination /tmp 2>/dev/null | tail -1)
-          echo "TARBALL_PATH=$TARBALL" >> $GITHUB_ENV
-      - name: Install from tarball globally
-        run: npm install -g ${{ env.TARBALL_PATH }}
+          # Must install core before CLI since CLI depends on it
+          CORE_TARBALL=$(cd packages/core && pnpm pack --pack-destination /tmp 2>/dev/null | tail -1)
+          CLI_TARBALL=$(cd packages/cli && pnpm pack --pack-destination /tmp 2>/dev/null | tail -1)
+          echo "CORE_TARBALL=$CORE_TARBALL" >> $GITHUB_ENV
+          echo "CLI_TARBALL=$CLI_TARBALL" >> $GITHUB_ENV
+      - name: Install from tarballs globally
+        run: npm install -g ${{ env.CORE_TARBALL }} ${{ env.CLI_TARBALL }}
       - name: Verify CLI binary works
         run: |
           dc2mermaid --version
