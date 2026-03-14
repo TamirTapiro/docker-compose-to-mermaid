@@ -1,11 +1,12 @@
 {
   "name": "docker-compose-to-mermaid-monorepo",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "pnpm -r run build",
     "test": "pnpm -r run test",
     "test:watch": "vitest",
-    "lint": "eslint packages/*/src --ext .ts",
+    "lint": "eslint",
     "typecheck": "pnpm -r run typecheck",
     "clean": "pnpm -r run clean",
     "prepare": "husky"

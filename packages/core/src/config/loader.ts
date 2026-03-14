@@ -21,7 +21,7 @@ export async function loadConfig(
       const result = configSchema.safeParse(raw);
 
       if (!result.success) {
-        const e = result.error.errors[0];
+        const e = result.error.issues[0];
         return err({
           code: 'E003',
           message: `Config error: ${e?.message ?? 'invalid'}`,
