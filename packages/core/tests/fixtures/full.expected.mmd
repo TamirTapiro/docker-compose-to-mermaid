@@ -1,14 +1,13 @@
 flowchart LR
-  subgraph backend [backend]
-    api[api]
-    worker[worker]
-    redis([redis])
-    db[(db)]
-  end
+
+  api[api]
+  worker[worker]
+  redis[(redis)]
+  db[(db)]
+
   db_data[(db_data)]
-  api --> db
-  api --> redis
-  api -.->|postgres:5432| db
-  worker --> redis
+
+  api -->|postgres:5432| db
+  api -->|redis| redis
+  worker -->|redis| redis
   worker --> db
-  db --- db_data

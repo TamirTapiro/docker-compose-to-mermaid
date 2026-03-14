@@ -1,0 +1,74 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+# Write access is needed for release-please to create/update release PRs and
+# tags. Pull-requests write is needed to open the release PR itself.
+permissions:
+  contents: write
+  pull-requests: write
+
+# Never cancel a release in progress — interrupting mid-publish can leave the
+# registry in a partially-published state. This is intentionally different from
+# the CI workflow, which does cancel in-progress runs.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  publish:
+    needs: release-please
+    # Only runs when release-please has actually merged a release PR and created
+    # a GitHub release. On every other push to main this job is skipped.
+    if: ${{ needs.release-please.outputs.release_created }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # pnpm must be set up before setup-node so that the node cache key works.
+      # Version must match the version used in ci.yml to keep the toolchain consistent.
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          # Configures the npm registry and writes NODE_AUTH_TOKEN into .npmrc.
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
+
+      - run: pnpm install --frozen-lockfile
+
+      # Build in dependency order: core must be built before cli, because cli
+      # imports from @dc2mermaid/core at its workspace path.
+      - run: pnpm --filter @dc2mermaid/core build
+      - run: pnpm --filter docker-compose-to-mermaid build
+
+      # --no-git-checks skips the "is the working tree clean / is this a tagged
+      # commit" guard that pnpm publish normally enforces. In CI the checkout is
+      # a detached HEAD on the merge commit, not a tag, so the guard would always
+      # fail. Release-please already ensures we are only here when a proper
+      # release tag was created.
+      - run: pnpm --filter @dc2mermaid/core publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - run: pnpm --filter docker-compose-to-mermaid publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -7,10 +7,17 @@
     "dc2mermaid": "./dist/index.js",
     "docker-compose-to-mermaid": "./dist/index.js"
   },
-  "files": ["dist/", "README.md", "LICENSE"],
-  "engines": { "node": ">=18.0.0" },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "build": "tsup",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist/"
   },
@@ -19,5 +26,9 @@
     "chalk": "^5",
     "clipboardy": "^4",
     "commander": "^12"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "vitest": "^1.6"
   }
 }

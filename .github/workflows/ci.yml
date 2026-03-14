@@ -127,9 +127,9 @@ jobs:
       - name: Pack CLI package
         working-directory: packages/cli
         run: |
-          npm pack --dry-run
-          TARBALL=$(npm pack 2>/dev/null | tail -1)
-          echo "TARBALL_PATH=packages/cli/$TARBALL" >> $GITHUB_ENV
+          # pnpm pack resolves workspace:* to actual version numbers in the tarball
+          TARBALL=$(pnpm pack --pack-destination /tmp 2>/dev/null | tail -1)
+          echo "TARBALL_PATH=$TARBALL" >> $GITHUB_ENV
       - name: Install from tarball globally
         run: npm install -g ${{ env.TARBALL_PATH }}
       - name: Verify CLI binary works

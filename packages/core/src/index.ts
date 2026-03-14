@@ -62,6 +62,10 @@ export async function generate(options: GenerateOptions): Promise<string> {
   return render(graph, options.render);
 }
 
+// ─── Renderers ───────────────────────────────────────────────────────────────
+
+export { flowchartRenderer, c4Renderer, architectureRenderer } from './renderer/index.js';
+
 // ─── Config loading & merging ────────────────────────────────────────────────
 
 export * from './config/index.js';

@@ -1,6 +1,6 @@
 flowchart LR
-  subgraph default [default]
-    backend[backend]
-    datastore[datastore]
-  end
-  backend --> datastore
+
+  backend[backend]
+  datastore[datastore]
+
+  backend -->|postgres| datastore

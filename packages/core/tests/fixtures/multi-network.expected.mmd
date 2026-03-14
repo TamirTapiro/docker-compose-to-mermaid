@@ -1,10 +1,13 @@
 flowchart LR
-  subgraph public [public]
+
+  subgraph public
     frontend[frontend]
   end
-  subgraph internal [internal]
+
+  subgraph internal
     frontend[frontend]
     api[api]
     db[(db)]
   end
+
   api --> db

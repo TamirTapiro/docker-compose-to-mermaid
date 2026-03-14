@@ -1,0 +1,48 @@
+# Example workflow showing how to use the docker-compose-to-mermaid GitHub Action.
+#
+# Copy this file into your own repository and adjust the inputs as needed.
+# The workflow runs automatically whenever a docker-compose file changes,
+# generates an up-to-date Mermaid diagram, and commits it back to the branch.
+#
+# Required repository setting:
+#   Settings -> Actions -> General -> Workflow permissions -> "Read and write permissions"
+#   (or grant contents: write explicitly as shown below)
+
+name: Update Architecture Diagram
+
+on:
+  push:
+    # Trigger only when a compose file is modified so the job is not
+    # wasted on unrelated commits.
+    paths:
+      - 'docker-compose*.yml'
+      - 'docker-compose*.yaml'
+
+jobs:
+  diagram:
+    name: Generate Mermaid diagram
+    runs-on: ubuntu-latest
+
+    # Write permission is required for the commit-output feature.
+    # Scope it to contents only — least-privilege.
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Fetch the full branch so `git push` works correctly.
+          # A shallow clone (depth: 1) is enough here since we only need
+          # the working tree, not history.
+          fetch-depth: 1
+
+      - uses: TamirTapiro/docker-compose-to-mermaid@v1
+        with:
+          # Write the diagram into docs/ so it can be embedded in your README
+          # with: ![Architecture](docs/architecture.mmd)
+          output: docs/architecture.mmd
+          format: flowchart
+          direction: LR
+          include-network-boundaries: 'true'
+          commit-output: 'true'
+          commit-message: 'chore: update architecture diagram [skip ci]'

@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "pnpm -r run build",
-    "test": "vitest run",
+    "test": "pnpm -r run test",
     "test:watch": "vitest",
     "lint": "eslint packages/*/src --ext .ts",
     "typecheck": "pnpm -r run typecheck",

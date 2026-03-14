@@ -1,8 +1,8 @@
 flowchart LR
-  subgraph default [default]
-    api[api]
-    db[(db)]
-  end
+
+  api[api]
+  db[(db)]
+
   db_data[(db_data)]
+
   api --> db
-  db --- db_data

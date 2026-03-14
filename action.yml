@@ -1,0 +1,106 @@
+name: 'Docker Compose to Mermaid'
+description: 'Generate Mermaid architecture diagrams from docker-compose files'
+author: 'TamirTapiro'
+
+branding:
+  icon: 'box'
+  color: 'purple'
+
+inputs:
+  file:
+    description: 'Path to docker-compose.yml (auto-discovered if not set)'
+    required: false
+  output:
+    description: 'Output file path'
+    required: false
+    default: 'diagram.mmd'
+  format:
+    description: 'Diagram format: flowchart | c4 | architecture'
+    required: false
+    default: 'flowchart'
+  direction:
+    description: 'Diagram direction: LR | TB | BT | RL'
+    required: false
+    default: 'LR'
+  include-volumes:
+    description: 'Include volume nodes in the diagram'
+    required: false
+    default: 'false'
+  include-network-boundaries:
+    description: 'Include network subgraphs'
+    required: false
+    default: 'false'
+  commit-output:
+    description: 'Commit the generated diagram back to the repository. Only use on push events — commit-back to a PR branch requires extra permissions and is not supported.'
+    required: false
+    default: 'false'
+  commit-message:
+    description: 'Commit message used when commit-output is true'
+    required: false
+    default: 'chore: update architecture diagram'
+
+outputs:
+  diagram-path:
+    description: 'Path to the generated diagram file'
+    value: ${{ steps.generate.outputs.diagram-path }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        # Node 20 is the current LTS; matches the version used in CI for this project.
+        node-version: '20'
+
+    - name: Install dc2mermaid
+      shell: bash
+      # Pin to `latest` so action consumers always get a compatible CLI.
+      # If you need a specific version, replace `latest` with e.g. `0.1.0`.
+      run: npm install -g docker-compose-to-mermaid@latest
+
+    - name: Generate diagram
+      id: generate
+      shell: bash
+      run: |
+        ARGS=""
+
+        # Optional positional argument — file path comes before flags
+        if [ -n "${{ inputs.file }}" ]; then
+          ARGS="$ARGS ${{ inputs.file }}"
+        fi
+
+        ARGS="$ARGS --output ${{ inputs.output }}"
+        ARGS="$ARGS --format ${{ inputs.format }}"
+        ARGS="$ARGS --direction ${{ inputs.direction }}"
+
+        # Boolean flags are only passed when explicitly enabled; the CLI
+        # defaults both to false, so omitting them is correct.
+        if [ "${{ inputs.include-volumes }}" = "true" ]; then
+          ARGS="$ARGS --include-volumes"
+        fi
+        if [ "${{ inputs.include-network-boundaries }}" = "true" ]; then
+          ARGS="$ARGS --include-network-boundaries"
+        fi
+
+        # Word-splitting is intentional here — ARGS is a flat string of flags.
+        # shellcheck disable=SC2086
+        dc2mermaid generate $ARGS
+
+        echo "diagram-path=${{ inputs.output }}" >> "$GITHUB_OUTPUT"
+
+    - name: Commit diagram
+      # Only run when the caller explicitly opts in.
+      # Note: this step will fail on pull_request events unless the workflow
+      # has `permissions: contents: write` AND the PR is from a branch in the
+      # same repository (forks do not have write access).
+      if: inputs.commit-output == 'true'
+      shell: bash
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add "${{ inputs.output }}"
+        # `git diff --staged --quiet` exits 0 when nothing changed — skip
+        # the commit entirely so the step doesn't fail on a no-op run.
+        git diff --staged --quiet || git commit -m "${{ inputs.commit-message }}"
+        git push
