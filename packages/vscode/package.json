@@ -1,13 +1,40 @@
 {
   "name": "dc2mermaid-vscode",
+  "displayName": "Docker Compose to Mermaid",
+  "description": "Live Mermaid architecture diagram preview for docker-compose files",
   "version": "0.0.1",
   "private": true,
-  "engines": { "vscode": "^1.85.0" },
+  "publisher": "TamirTapiro",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "activationEvents": [
+    "workspaceContains:**/docker-compose*.yml"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "dc2mermaid.generateDiagram",
+        "title": "Docker Compose: Generate Architecture Diagram"
+      }
+    ]
+  },
   "scripts": {
+    "build": "tsup src/extension.ts --format cjs --dts --out-dir dist --external vscode",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist/"
   },
   "dependencies": {
     "@dc2mermaid/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "tsup": "^8",
+    "typescript": "^5.4"
   }
 }
