@@ -86,7 +86,7 @@ docker-compose-to-mermaid/
 
 ### Key Packages
 
-- **@dc2mermaid/core** — Core diagram generation engine (no external dependencies)
+- **dc2mermaid-core** — Core diagram generation engine (no external dependencies)
 - **@dc2mermaid/cli** — Command-line tool (uses core package)
 - **@dc2mermaid/vscode** — VS Code extension
 - **@dc2mermaid/action** — GitHub Actions integration
@@ -106,7 +106,7 @@ pnpm test
 Test only the core package:
 
 ```bash
-pnpm --filter @dc2mermaid/core test
+pnpm --filter dc2mermaid-core test
 ```
 
 ### Update Snapshots
@@ -114,7 +114,7 @@ pnpm --filter @dc2mermaid/core test
 When diagram output legitimately changes, update test snapshots:
 
 ```bash
-pnpm --filter @dc2mermaid/core exec vitest --update
+pnpm --filter dc2mermaid-core exec vitest --update
 ```
 
 ### Run Tests in Watch Mode
@@ -130,7 +130,7 @@ pnpm test:watch
 Generate a coverage report:
 
 ```bash
-pnpm --filter @dc2mermaid/core exec vitest --coverage
+pnpm --filter dc2mermaid-core exec vitest --coverage
 ```
 
 ## Code Standards

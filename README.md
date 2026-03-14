@@ -247,13 +247,13 @@ jobs:
 Use the core library programmatically in your Node.js or TypeScript projects.
 
 ```bash
-npm install @dc2mermaid/core
+npm install dc2mermaid-core
 ```
 
 **High-level API:**
 
 ```typescript
-import { generate } from '@dc2mermaid/core';
+import { generate } from 'dc2mermaid-core';
 
 const diagram = await generate({
   files: ['docker-compose.yml'],
@@ -275,7 +275,7 @@ console.log(diagram);
 **Step-by-step pipeline API:**
 
 ```typescript
-import { parse, analyze, render } from '@dc2mermaid/core';
+import { parse, analyze, render } from 'dc2mermaid-core';
 
 // Stage 1: Load and parse docker-compose file(s)
 const composed = await parse(['docker-compose.yml']);
@@ -299,7 +299,7 @@ console.log(diagram);
 **Export as JSON:**
 
 ```typescript
-import { parse, analyze, toJSON } from '@dc2mermaid/core';
+import { parse, analyze, toJSON } from 'dc2mermaid-core';
 
 const composed = await parse(['docker-compose.yml']);
 const graph = analyze(composed);

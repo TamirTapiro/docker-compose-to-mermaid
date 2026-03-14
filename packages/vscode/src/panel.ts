@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { generate } from '@dc2mermaid/core';
+import { generate } from 'dc2mermaid-core';
 
 const MERMAID_CDN = 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
 const VIEW_TYPE = 'dc2mermaidPreview';

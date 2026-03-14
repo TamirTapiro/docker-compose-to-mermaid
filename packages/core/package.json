@@ -1,5 +1,5 @@
 {
-  "name": "@dc2mermaid/core",
+  "name": "dc2mermaid-core",
   "version": "0.1.0",
   "description": "Core library for docker-compose-to-mermaid",
   "type": "module",

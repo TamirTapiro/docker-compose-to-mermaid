@@ -36,7 +36,7 @@
     "clean": "rm -rf dist/"
   },
   "dependencies": {
-    "@dc2mermaid/core": "workspace:*",
+    "dc2mermaid-core": "workspace:*",
     "chalk": "^5",
     "clipboardy": "^5",
     "commander": "^14"

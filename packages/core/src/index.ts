@@ -2,7 +2,7 @@ import type { GenerateOptions, RenderOptions } from './types/renderer.js';
 import type { IRGraph } from './types/graph.js';
 import type { NormalizedCompose } from './types/compose.js';
 
-// Re-export all public types — consumers import types from '@dc2mermaid/core'
+// Re-export all public types — consumers import types from 'dc2mermaid-core'
 export * from './types/index.js';
 export * from './errors/index.js';
 export * from './analyzer/index.js';

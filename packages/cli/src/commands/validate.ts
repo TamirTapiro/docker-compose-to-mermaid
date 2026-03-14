@@ -1,8 +1,8 @@
 import { resolve } from 'node:path';
 import { Command } from 'commander';
 import chalk from 'chalk';
-import { parse, formatDiagnostic, getExitCode, EXIT_SUCCESS } from '@dc2mermaid/core';
-import type { Diagnostic } from '@dc2mermaid/core';
+import { parse, formatDiagnostic, getExitCode, EXIT_SUCCESS } from 'dc2mermaid-core';
+import type { Diagnostic } from 'dc2mermaid-core';
 
 interface ValidateCliOptions {
   readonly strict: boolean;

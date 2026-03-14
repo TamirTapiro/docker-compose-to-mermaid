@@ -6,6 +6,6 @@ export default defineConfig({
   dts: false,
   clean: true,
   sourcemap: false,
-  external: ['@dc2mermaid/core'],
+  external: ['dc2mermaid-core'],
   outDir: 'dist',
 });

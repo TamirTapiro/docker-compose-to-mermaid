@@ -2,7 +2,7 @@ import { access, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { Command } from 'commander';
 import chalk from 'chalk';
-import { EXIT_SUCCESS, EXIT_ERROR } from '@dc2mermaid/core';
+import { EXIT_SUCCESS, EXIT_ERROR } from 'dc2mermaid-core';
 
 const CONFIG_FILENAME = '.dc2mermaid.yml';
 
