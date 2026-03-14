@@ -13,6 +13,22 @@
       "require": "./dist/index.cjs"
     }
   },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TamirTapiro/docker-compose-to-mermaid.git",
+    "directory": "packages/core"
+  },
+  "keywords": [
+    "docker-compose",
+    "mermaid",
+    "diagram",
+    "architecture",
+    "visualization"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "files": [
     "dist/"
   ],

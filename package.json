@@ -17,6 +17,7 @@
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
     "@vitest/coverage-v8": "^4.1",
+    "@vscode/vsce": "^3.7.1",
     "eslint": "^10",
     "husky": "^9",
     "lint-staged": "^16",

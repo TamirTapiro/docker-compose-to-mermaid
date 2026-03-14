@@ -7,6 +7,20 @@
     "dc2mermaid": "./dist/index.js",
     "docker-compose-to-mermaid": "./dist/index.js"
   },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TamirTapiro/docker-compose-to-mermaid.git",
+    "directory": "packages/cli"
+  },
+  "keywords": [
+    "docker-compose",
+    "mermaid",
+    "diagram",
+    "architecture",
+    "cli",
+    "visualization"
+  ],
   "files": [
     "dist/",
     "README.md",
