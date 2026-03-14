@@ -64,8 +64,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       # Build in dependency order: core must be built before cli, because cli
-      # imports from @dc2mermaid/core at its workspace path.
-      - run: pnpm --filter @dc2mermaid/core build
+      # imports from dc2mermaid-core at its workspace path.
+      - run: pnpm --filter dc2mermaid-core build
       - run: pnpm --filter docker-compose-to-mermaid build
 
       # --no-git-checks skips the "is the working tree clean / is this a tagged
@@ -73,7 +73,7 @@ jobs:
       # a detached HEAD on the merge commit, not a tag, so the guard would always
       # fail. Release-please already ensures we are only here when a proper
       # release tag was created.
-      - run: pnpm --filter @dc2mermaid/core publish --access public --no-git-checks
+      - run: pnpm --filter dc2mermaid-core publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

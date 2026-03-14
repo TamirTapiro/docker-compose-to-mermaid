@@ -57,7 +57,7 @@ jobs:
           node-version: 20
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      # Build first so @dc2mermaid/core dist types exist for CLI typecheck
+      # Build first so dc2mermaid-core dist types exist for CLI typecheck
       - run: pnpm build
       - run: pnpm typecheck
 

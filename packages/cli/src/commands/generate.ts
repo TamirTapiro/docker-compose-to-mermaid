@@ -8,8 +8,8 @@ import {
   formatDiagnostics,
   getExitCode,
   EXIT_SUCCESS,
-} from '@dc2mermaid/core';
-import type { DiagramType, DiagramDirection } from '@dc2mermaid/core';
+} from 'dc2mermaid-core';
+import type { DiagramType, DiagramDirection } from 'dc2mermaid-core';
 import { writeOutput } from '../output.js';
 
 interface GenerateCliOptions {

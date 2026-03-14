@@ -1,6 +1,6 @@
 import { writeFileSync } from 'node:fs';
-import { ok, err } from '@dc2mermaid/core';
-import type { Result, Diagnostic } from '@dc2mermaid/core';
+import { ok, err } from 'dc2mermaid-core';
+import type { Result, Diagnostic } from 'dc2mermaid-core';
 
 /**
  * Write diagram output to stdout or a file.
