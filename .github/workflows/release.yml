@@ -63,6 +63,14 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      # Write auth token directly into .npmrc so both npm and pnpm pick it up.
+      # actions/setup-node writes to a temp .npmrc via NPM_CONFIG_USERCONFIG but
+      # pnpm publish doesn't always honour that env var.
+      - name: Configure npm auth
+        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       # Build in dependency order: core must be built before cli, because cli
       # imports from dc2mermaid-core at its workspace path.
       - run: pnpm --filter dc2mermaid-core build
@@ -74,12 +82,8 @@ jobs:
       # fail. Release-please already ensures we are only here when a proper
       # release tag was created.
       - run: pnpm --filter dc2mermaid-core publish --access public --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - run: pnpm --filter docker-compose-to-mermaid publish --access public --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       # Build and publish the VSCode extension.
       # Requires a VSCE_PAT secret: generate at https://dev.azure.com → User Settings
