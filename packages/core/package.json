@@ -39,7 +39,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "yaml": "^2.4",
+    "yaml": "^2.8",
     "zod": "^4.3"
   },
   "devDependencies": {
