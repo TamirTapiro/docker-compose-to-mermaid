@@ -17,14 +17,14 @@
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
     "@vitest/coverage-v8": "^4.1",
-    "@vscode/vsce": "^3.7.1",
+    "@vscode/vsce": "^3.9.1",
     "eslint": "^10",
     "husky": "^9",
     "lint-staged": "^16",
     "prettier": "^3",
     "tsup": "^8",
-    "typescript": "^5.4",
-    "vite": "^6.4.1",
+    "typescript": "^6.0",
+    "vite": "^8.0.8",
     "vitest": "^4.1"
   }
 }
