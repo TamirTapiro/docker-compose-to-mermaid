@@ -50,7 +50,7 @@ jobs:
 
       # pnpm must be set up before setup-node so that the node cache key works.
       # Version must match the version used in ci.yml to keep the toolchain consistent.
-      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+      - uses: pnpm/action-setup@903f9c1a6ebcba6cf41d87230be49611ac97822e # v6.0.3
         with:
           version: 9
 
