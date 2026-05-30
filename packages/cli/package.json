@@ -39,7 +39,7 @@
     "dc2mermaid-core": "workspace:*",
     "chalk": "^5",
     "clipboardy": "^5",
-    "commander": "^14"
+    "commander": "^15"
   },
   "devDependencies": {
     "@types/node": "^25",
